@@ -35,7 +35,7 @@ public class ItemFrag extends Fragment {
 
 
         //change this later
-        final LocalDate test = LocalDate.of(Integer.parseInt("2020"), Integer.parseInt("7"), Integer.parseInt("4"));
+        final LocalDate test_date = LocalDate.of(Integer.parseInt("2020"), Integer.parseInt("7"), Integer.parseInt("4"));
 
 
 
@@ -44,7 +44,7 @@ public class ItemFrag extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Task myitem = new Task(tv.getText().toString(), test, "Project");
+                Task myitem = new Task(tv.getText().toString(), test_date, "Project");
                 myact.myItems.add(myitem);
                 Toast.makeText(getActivity().getApplicationContext(), "added item", LENGTH_SHORT).show();
             }
