@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Fragments">
+    <item android:title="Task Me">
         <menu>
             <item
                 android:id="@+id/item_frag"
-                android:title="Add Item" />
+                android:title="TODO" />
             <item
                 android:id="@+id/list_frag"
-                android:title="Item List" />
+                android:title="DONE" />
+            <item
+                android:id="@+id/stats_frag"
+                android:title="STATS" />
         </menu>
     </item>
 

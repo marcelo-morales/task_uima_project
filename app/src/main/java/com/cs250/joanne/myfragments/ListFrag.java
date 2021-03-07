@@ -2,8 +2,6 @@ package com.cs250.joanne.myfragments;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
@@ -18,8 +16,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
 
 
 public class ListFrag extends Fragment {

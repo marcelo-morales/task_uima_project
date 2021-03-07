@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment list;
     private FragmentTransaction transaction;
     protected ItemAdapter aa;
-    protected ArrayList<Item> myItems;
+    protected ArrayList<Task> myItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         // create ArrayList of items
-        myItems = new ArrayList<Item>();
+        myItems = new ArrayList<Task>();
         // make array adapter to bind arraylist to listview with custom item layout
         aa = new ItemAdapter(this, R.layout.item_layout, myItems);
 

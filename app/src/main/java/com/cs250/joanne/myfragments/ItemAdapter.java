@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by joanne.
  */
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class ItemAdapter extends ArrayAdapter<Task> {
 
     int resource;
 
-    public ItemAdapter(Context ctx, int res, List<Item> items)
+    public ItemAdapter(Context ctx, int res, List<Task> items)
     {
         super(ctx, res, items);
         resource = res;
@@ -26,7 +26,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout itemView;
-        Item it = getItem(position);
+        Task it = getItem(position);
 
         if (convertView == null) {
             itemView = new LinearLayout(getContext());
