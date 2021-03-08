@@ -44,11 +44,14 @@ public class MainActivity extends AppCompatActivity
         item = new ItemFrag();
         list = new ListFrag();
 
+        //list should be the first thing we see
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, item).commit();
+                .add(R.id.fragment_container, list).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     @Override
@@ -76,9 +79,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //if (id == R.id.action_settings) {
+            //return true;
+            setContentView(R.layout.activity_task_update);
+       // }
 
         return super.onOptionsItemSelected(item);
     }
