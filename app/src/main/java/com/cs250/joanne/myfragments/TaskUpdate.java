@@ -10,13 +10,9 @@ public class TaskUpdate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_update);
-
         //get text inputted from textboxes
 
         //add it to task list
-
-
-
 
 
 
