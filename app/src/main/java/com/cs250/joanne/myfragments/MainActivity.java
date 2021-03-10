@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity
     protected ItemAdapter aa;
     //arrayadapter
 
-    protected ArrayList<Task> myItems;
+    //list of stack
+    public static ArrayList<Task> myItems = new ArrayList<Task>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         // create ArrayList of items
-        myItems = new ArrayList<Task>();
+        // myItems = new ArrayList<Task>();
         // make array adapter to bind arraylist to listview with custom item layout
         aa = new ItemAdapter(this, R.layout.item_layout, myItems);
 
@@ -60,15 +61,17 @@ public class MainActivity extends AppCompatActivity
         list = new ListFrag();
 
         //list should be the first thing we see
-        /*
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, list).commit();
-        */
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+
+
     }
 
-    /*
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity
         String task = bundle.getString("task_name");
 
     }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,9 +102,9 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         //if (id == R.id.action_settings) {
-            //return true;
+        //return true;
         //setContentView(R.layout.activity_task_update);
-       // }
+        // }
         Intent myIntent = new Intent(this, TaskUpdate.class);
 
         this.startActivity(myIntent);
@@ -132,17 +134,17 @@ public class MainActivity extends AppCompatActivity
 
             this.startActivity(myIntent);
 
-            /*
-            transaction = getSupportFragmentManager().beginTransaction();
+           /*
+           transaction = getSupportFragmentManager().beginTransaction();
 
 // Replace whatever is in the fragment_container view with this fragment,
 // and add the transaction to the back stack so the user can navigate back
-            transaction.replace(R.id.fragment_container, list);
-            transaction.addToBackStack(null);
+           transaction.replace(R.id.fragment_container, list);
+           transaction.addToBackStack(null);
 
 // Commit the transaction
-            transaction.commit();
-            */
+           transaction.commit();
+           */
 
         }
 
@@ -164,19 +166,16 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        Intent intent = getIntent();
-        String taskName = intent.getStringExtra("taskName");
-        String taskCategory = intent.getStringExtra("taskCategory");
-        String taskDate = intent.getStringExtra("taskDue");
-        Task newTask = new Task(taskName, taskDate , taskCategory);
-        //this.aa.notifyDataSetChanged();
+       /*
+       Intent intent = getIntent();
+       String taskName = intent.getStringExtra("taskName");
+       String taskCategory = intent.getStringExtra("taskCategory");
+       String taskDate = intent.getStringExtra("taskDue");
+       Task newTask = new Task(taskName, taskDate , taskCategory);
+       //this.aa.notifyDataSetChanged();
 
-        myItems.add(newTask);
-
-
-
-
-
+       myItems.add(newTask);
+       */
 
         this.aa.notifyDataSetChanged();
 
@@ -186,20 +185,20 @@ public class MainActivity extends AppCompatActivity
 // and add the transaction to the back stack so the user can navigate back
 
 
-        /*
-        // Inflate the layout for this fragment
-        View myview = inflater.inflate(R.layout.list_frag, container, false);
+       /*
+       // Inflate the layout for this fragment
+       View myview = inflater.inflate(R.layout.list_frag, container, false);
 
-        cntx = getActivity().getApplicationContext();
+       cntx = getActivity().getApplicationContext();
 
-        myact = (MainActivity) getActivity();
-        myList = (ListView) myview.findViewById(R.id.mylist);
-        // connect listview to the array adapter in MainActivity
-        myList.setAdapter(myact.aa);
-        registerForContextMenu(myList);
-        // refresh view
-        myact.aa.notifyDataSetChanged();
-        */
+       myact = (MainActivity) getActivity();
+       myList = (ListView) myview.findViewById(R.id.mylist);
+       // connect listview to the array adapter in MainActivity
+       myList.setAdapter(myact.aa);
+       registerForContextMenu(myList);
+       // refresh view
+       myact.aa.notifyDataSetChanged();
+       */
 
 
 
@@ -208,6 +207,9 @@ public class MainActivity extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onPause() {
+
+
+
         super.onPause();
     }
 
@@ -264,3 +266,4 @@ public class MainActivity extends AppCompatActivity
 
 
 }
+

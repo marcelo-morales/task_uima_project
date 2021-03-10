@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.cs250.joanne.myfragments.MainActivity.myItems;
 import static java.time.LocalDate.of;
 
 public class TaskUpdate extends AppCompatActivity {
@@ -64,6 +65,7 @@ public class TaskUpdate extends AppCompatActivity {
 
         //Get local date
         datePicker = (DatePicker) findViewById(R.id.datePicker1);
+        //localDate = LocalDate.of(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
         System.out.println("this is new date " + localDate);
 
 
@@ -72,8 +74,8 @@ public class TaskUpdate extends AppCompatActivity {
             public void onClick(View view) {
                 String value = editText.getText().toString();
                 String value2 = editText2.getText().toString();
-                System.out.println("this is category name " + value);
-                System.out.println("this is category name " + value2);
+                //System.out.println("this is category name " + value);
+                //System.out.println("this is category name " + value2);
                 Intent intent = new Intent(TaskUpdate.this, MainActivity.class);
 
                 intent.putExtra("taskName", value);
@@ -84,12 +86,19 @@ public class TaskUpdate extends AppCompatActivity {
                 System.out.println("this is month " + month);
                 int year =  datePicker.getYear();
                 System.out.println("this is year " + year);
-               // Calendar calendar = Calendar.getInstance();
+                // Calendar calendar = Calendar.getInstance();
                 //calendar.set(year, month, day);
                 //Date time = calendar.getTime();
                 String date = String.valueOf(month).concat("/").concat(String.valueOf(day)).concat("/").concat(String.valueOf(year));
                 System.out.println("this is date " + date);
                 intent.putExtra("taskDue", date);
+
+
+                Task newTask = new Task(value, date , value2);
+                //this.aa.notifyDataSetChanged();
+
+                myItems.add(newTask);
+
                 startActivity(intent);
 
 
@@ -99,7 +108,7 @@ public class TaskUpdate extends AppCompatActivity {
         simpleButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // System.out.println("this is task name " + taskName);
+                // System.out.println("this is task name " + taskName);
                 //System.out.println("this is category name " + taskCategory);
                 finish();
             }
