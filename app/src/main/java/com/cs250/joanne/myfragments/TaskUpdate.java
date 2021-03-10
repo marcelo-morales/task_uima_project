@@ -64,7 +64,6 @@ public class TaskUpdate extends AppCompatActivity {
 
         //Get local date
         datePicker = (DatePicker) findViewById(R.id.datePicker1);
-        //localDate = LocalDate.of(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
         System.out.println("this is new date " + localDate);
 
 

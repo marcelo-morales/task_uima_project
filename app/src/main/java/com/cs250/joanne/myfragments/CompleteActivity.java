@@ -48,16 +48,11 @@ public class CompleteActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
+    /*
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -71,6 +66,7 @@ public class CompleteActivity extends AppCompatActivity
         String task = bundle.getString("task_name");
 
     }
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

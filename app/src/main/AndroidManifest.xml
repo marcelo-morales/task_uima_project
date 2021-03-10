@@ -8,16 +8,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CompleteActivity"></activity>
-        <activity android:name=".CompleteTasks" />
+        <activity
+            android:name=".CompleteActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
         <activity
             android:name=".Statistics"
             android:label="Statistics"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".TaskUpdate"
             android:label="Task Update"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

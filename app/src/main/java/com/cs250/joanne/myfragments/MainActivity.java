@@ -60,17 +60,15 @@ public class MainActivity extends AppCompatActivity
         list = new ListFrag();
 
         //list should be the first thing we see
+        /*
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, list).commit();
-
+        */
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
     }
 
+    /*
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -84,6 +82,7 @@ public class MainActivity extends AppCompatActivity
         String task = bundle.getString("task_name");
 
     }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -209,9 +208,6 @@ public class MainActivity extends AppCompatActivity
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onPause() {
-
-
-
         super.onPause();
     }
 
