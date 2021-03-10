@@ -8,7 +8,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TaskUpdate"></activity>
+        <activity android:name=".CompleteActivity"></activity>
+        <activity android:name=".CompleteTasks" />
+        <activity
+            android:name=".Statistics"
+            android:label="Statistics"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TaskUpdate"
+            android:label="Task Update"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"

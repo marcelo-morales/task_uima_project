@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CurrentTasks</string>
+    <string name="stats_name">Statistics</string>
+    <string name="complete_name">Completed Tasks</string>
     <string name="add">ADD ITEM</string>
     <string name="cancel">CANCEL</string>
     <string name="update">UPDATE</string>

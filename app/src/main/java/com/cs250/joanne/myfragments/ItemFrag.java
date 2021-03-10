@@ -44,7 +44,7 @@ public class ItemFrag extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Task myitem = new Task(tv.getText().toString(), test_date, "Project");
+                Task myitem = new Task(tv.getText().toString(), "go to item frag if broke", "Project");
                 myact.myItems.add(myitem);
                 Toast.makeText(getActivity().getApplicationContext(), "added item", LENGTH_SHORT).show();
             }

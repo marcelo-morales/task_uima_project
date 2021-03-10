@@ -4,13 +4,13 @@
     <item android:title="Task Me">
         <menu>
             <item
-                android:id="@+id/item_frag"
+                android:id="@+id/todo"
                 android:title="TODO" />
             <item
-                android:id="@+id/list_frag"
+                android:id="@+id/done"
                 android:title="DONE" />
             <item
-                android:id="@+id/stats_frag"
+                android:id="@+id/stats"
                 android:title="STATS" />
         </menu>
     </item>
