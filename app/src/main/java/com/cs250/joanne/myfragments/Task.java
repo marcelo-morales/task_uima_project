@@ -19,6 +19,18 @@ public class Task {
     }
 
     public String getWhat() {
-        return task_name + "\n" + deadline + "\n" + category; }
+        return task_name + "\n" + deadline + "\n" + category;
+    }
 
+    public String getName() {
+        return task_name;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public String getCategory() {
+        return category;
+    }
 }

@@ -57,7 +57,7 @@ public class Statistics extends AppCompatActivity
 
 
     }
-
+    /*
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -71,6 +71,7 @@ public class Statistics extends AppCompatActivity
         String task = bundle.getString("task_name");
 
     }
+     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

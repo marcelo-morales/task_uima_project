@@ -57,9 +57,6 @@ public class TaskUpdate extends AppCompatActivity {
 
         editText = (EditText) findViewById(R.id.task_name);
 
-
-
-
         //Get task category
         editText2 = (EditText) findViewById(R.id.category_name);
 
