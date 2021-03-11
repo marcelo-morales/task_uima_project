@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -30,6 +31,10 @@ public class ListFrag extends Fragment {
 
     private ListView myList;
     private MainActivity myact;
+
+    private EditText editText;
+    private EditText editText2;
+    private DatePicker datePicker;
 
     Context cntx;
 
@@ -66,6 +71,9 @@ public class ListFrag extends Fragment {
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        editText = (EditText) v.findViewById(R.id.task_name);
+        editText2 = (EditText) v.findViewById(R.id.category_name);
+        datePicker = (DatePicker) v.findViewById(R.id.datePicker1);
         // create menu in code instead of in xml file (xml approach preferred)
         // Add menu items
         menu.add(0, MENU_ITEM_EDITVIEW, 0, R.string.menu_editview);
@@ -76,7 +84,6 @@ public class ListFrag extends Fragment {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         super.onContextItemSelected(item);
-
         AdapterView.AdapterContextMenuInfo menuInfo;
         menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int index = menuInfo.position; // position in array adapter
@@ -88,7 +95,9 @@ public class ListFrag extends Fragment {
                         Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getActivity(), TaskUpdate.class);
-
+                intent.putExtra("name", myact.myItems.get(index).getName());
+                intent.putExtra("category", myact.myItems.get(index).getCategory());
+                intent.putExtra("position", index);
                 this.startActivity(intent);
 
                 return false;

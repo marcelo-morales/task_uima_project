@@ -15,6 +15,7 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -51,15 +52,33 @@ public class TaskUpdate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_update);
 
+        Intent intent = getIntent();
+
         simpleButton1 = (Button) findViewById(R.id.save_btn);//get id of button 1
         simpleButton2 = (Button) findViewById(R.id.cancel_btn);//get id of button 2
 
+        String text1 = intent.getStringExtra("name");
+        String text2 = intent.getStringExtra("category");
+        int index = intent.getIntExtra("position", 0);
 
+        editText = (EditText) findViewById(R.id.task_name);
+        editText2 = (EditText) findViewById(R.id.category_name);
+
+        if (text1 != null && text2 != null) {
+            editText.setText(text1);
+            editText2.setText(text2);
+            myact.myItems.remove(index);
+        }
+
+        /*
         editText = (EditText) findViewById(R.id.task_name);
 
         //Get task category
         editText2 = (EditText) findViewById(R.id.category_name);
 
+
+
+         */
         //Get local date
         datePicker = (DatePicker) findViewById(R.id.datePicker1);
         //localDate = LocalDate.of(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
