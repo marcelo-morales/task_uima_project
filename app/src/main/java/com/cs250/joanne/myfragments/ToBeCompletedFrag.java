@@ -1,15 +1,18 @@
 package com.cs250.joanne.myfragments;
 
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -53,6 +56,18 @@ public class ToBeCompletedFrag extends Fragment {
             public void onClick(View v) {
                 myact.myItems.get(position).markComplete();
                 System.out.println(myact.myItems.get(position).checkCompletetion());
+            }
+        });
+
+        ImageView imageView = (ImageView) myview.findViewById(R.id.imageView2);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //getActivity().getSupportFragmentManager().popBackStackImmediate();
+                Fragment listFrag = new ListFrag();
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, listFrag);
+                fragmentTransaction.commit();
             }
         });
 
@@ -131,4 +146,5 @@ public class ToBeCompletedFrag extends Fragment {
         Log.d ("Other Fragment", "onDetach");
         super.onDetach();
     }
+
 }

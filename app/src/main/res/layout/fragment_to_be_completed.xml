@@ -13,8 +13,17 @@
         android:layout_height="320dp"
         android:layout_gravity="center"
         android:gravity="center_horizontal"
-        android:background="#808080"
+        android:background="#3F51B5"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:clickable="true"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@drawable/close" />
 
         <TextView
             android:id="@+id/textView1"
@@ -23,7 +32,8 @@
             android:text=""
             android:textSize="20sp"
             android:textAlignment="center"
-            android:layout_weight="1"
+            android:paddingTop="60dp"
+            android:paddingBottom="20dp"
             />
 
         <TextView
@@ -33,14 +43,8 @@
             android:text=""
             android:textSize="20sp"
             android:textAlignment="center"
-            android:layout_weight="1"
+            android:paddingBottom="20dp"
             />
-
-        <Button
-            android:id="@+id/complete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mark Completed"/>
 
         <TextView
             android:id="@+id/textView3"
@@ -49,8 +53,14 @@
             android:text=""
             android:textSize="20sp"
             android:textAlignment="center"
-            android:layout_weight="1"
+            android:paddingBottom="60dp"
             />
+
+        <Button
+            android:id="@+id/complete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark Completed" />
 
     </LinearLayout>
 
