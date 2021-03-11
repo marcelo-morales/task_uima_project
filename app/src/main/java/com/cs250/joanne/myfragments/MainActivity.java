@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment item;
     private Fragment list;
     private FragmentTransaction transaction;
-    protected ItemAdapter aa;
+    public ItemAdapter aa;
     //arrayadapter
 
     //list of stack

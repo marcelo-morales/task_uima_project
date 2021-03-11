@@ -48,25 +48,25 @@ public class CompleteActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // make array adapter to bind arraylist to listview with custom item layout
+        aa = new ItemAdapter(this, R.layout.item_layout, myItems);
+
+        item = new ItemFrag();
+        list = new ListFrag();
+
+
+
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
 
-    /*
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-
-        Bundle bundle = getIntent().getExtras();
-        String task = bundle.getString("task_name");
 
     }
-     */
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,6 +134,21 @@ public class CompleteActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.aa.notifyDataSetChanged();
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        Log.d ("Other Fragment", "onSaveInstanceState");
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate, onCreateView, and
+        // onCreateView if the parent Activity is killed and restarted.
+        super.onSaveInstanceState(savedInstanceState);
     }
 
 
