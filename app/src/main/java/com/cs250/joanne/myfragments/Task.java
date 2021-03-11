@@ -10,12 +10,14 @@ public class Task {
     private String task_name;
     private String deadline;
     private String category;
+    private Boolean completed;
 
 
     public Task(String task_name, String deadline, String category) {
         this.task_name = task_name;
         this.deadline = deadline;
         this.category = category;
+        completed = false;
     }
 
     public String getWhat() {
@@ -32,5 +34,13 @@ public class Task {
 
     public String getCategory() {
         return category;
+    }
+
+    public void markComplete() {
+        this.completed = true;
+    }
+
+    public  boolean checkCompletetion() {
+        return this.completed;
     }
 }

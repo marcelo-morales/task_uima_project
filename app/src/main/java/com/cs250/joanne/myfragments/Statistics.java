@@ -32,6 +32,10 @@ import android.widget.TextView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import static com.cs250.joanne.myfragments.MainActivity.myItems;
+import java.time.LocalDate;
+import java.time.Month;
+
 public class Statistics extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -39,9 +43,9 @@ public class Statistics extends AppCompatActivity
     private Fragment list;
     private FragmentTransaction transaction;
     protected ItemAdapter aa;
+
     //arrayadapter
 
-    protected ArrayList<Task> myItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +55,84 @@ public class Statistics extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int done_by_deadline(ArrayList<Task> tasks) {
+        int completed = 0;
+        for (int i = 0; i < tasks.size(); ++i) {
+            Task current_task = tasks.get(i);
+            int [] my_deadline = get_task_date(current_task);
+            int [] today = get_today();
+            if (completed_by_date(my_deadline, today) && current_task.checkCompletetion()) {
+                ++completed;
+            }
+
+        }
+
+        return completed;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int [] get_today() {
+        //Getting the current date value
+        LocalDate currentdate = LocalDate.now();
+        System.out.println("Current date: "+currentdate);
+        //Getting the current day
+        int currentDay = currentdate.getDayOfMonth();
+        System.out.println("Current day: "+currentDay);
+        //Getting the current month
+        Month currentMonth = currentdate.getMonth();
+        int current = currentMonth.getValue();
+
+        System.out.println("Current month: "+currentMonth);
+        //getting the current year
+        int currentYear = currentdate.getYear();
+        //System.out.println("Current month: "+currentYear);
+        int [] today = new int [3];
+        today[0] = current;
+        today[1] = currentDay;
+        today[2] = currentYear;
+        return today;
+    }
+
+    public int [] get_task_date(Task task) {
+        //Getting the current date value
+
+        String date = task.getDeadline();
+        String[] tokens = date.split("/");
+
+        int counter = 0;
+        int [] today = new int [3];
+
+        for (String t : tokens) {
+            if (counter == 0) {
+                int month=Integer.parseInt(t);
+                today[0] = month;
+            } else if (counter == 2) {
+                int day=Integer.parseInt(t);
+                today[1] = day;
+            } else {
+                int year=Integer.parseInt(t);
+                today[2] = year;
+            }
+        }
+
+        return today;
+    }
+
+    //helps with first two stats
+    public boolean completed_by_date (int [] date_one, int [] date_two) {
 
     }
+
+
+
+
+
     /*
     @Override
     public void onBackPressed() {
