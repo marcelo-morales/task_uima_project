@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -58,8 +61,21 @@ public class ListFrag extends Fragment {
         // program a short click on the list item
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar.make(view, "Selected #" + id, Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+                String taskName = myact.myItems.get(position).getName();
+                String category = myact.myItems.get(position).getCategory();
+                String date = myact.myItems.get(position).getDeadline();
+
+                Fragment newFrag = new ToBeCompletedFrag();
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", position);
+                bundle.putString("taskName", taskName);
+                bundle.putString("category", category);
+                bundle.putString("date", date);
+                newFrag.setArguments(bundle);
+
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, newFrag);
+                fragmentTransaction.commit();
             }
         });
 

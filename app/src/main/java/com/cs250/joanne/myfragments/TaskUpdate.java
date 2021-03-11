@@ -70,15 +70,6 @@ public class TaskUpdate extends AppCompatActivity {
             myact.myItems.remove(index);
         }
 
-        /*
-        editText = (EditText) findViewById(R.id.task_name);
-
-        //Get task category
-        editText2 = (EditText) findViewById(R.id.category_name);
-
-
-
-         */
         //Get local date
         datePicker = (DatePicker) findViewById(R.id.datePicker1);
         //localDate = LocalDate.of(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
