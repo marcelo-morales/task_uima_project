@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:padding="5dp"
-    tools:context=".ToBeCompletedFrag">
-
+    tools:context=".CompletedTasksFragment">
 
     <LinearLayout
         android:layout_width="320dp"
@@ -17,7 +16,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/close_mark"
+            android:id="@+id/close_mark_2"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
@@ -26,18 +25,18 @@
             android:src="@drawable/close" />
 
         <TextView
-            android:id="@+id/to_do_task"
+            android:id="@+id/completed_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="20sp"
             android:textAlignment="center"
-            android:paddingTop="60dp"
+            android:paddingTop="30dp"
             android:paddingBottom="20dp"
             />
 
         <TextView
-            android:id="@+id/to_do_date"
+            android:id="@+id/due_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
@@ -47,22 +46,25 @@
             />
 
         <TextView
-            android:id="@+id/to_do_category"
+            android:id="@+id/completed_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="20sp"
             android:textAlignment="center"
-            android:paddingBottom="60dp"
+            android:paddingBottom="20dp"
             />
 
-        <Button
-            android:id="@+id/complete_button"
+        <TextView
+            android:id="@+id/completed_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mark Completed" />
+            android:text=""
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:paddingBottom="30dp"
+            />
 
     </LinearLayout>
-
 
 </FrameLayout>

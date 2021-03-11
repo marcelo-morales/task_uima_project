@@ -17,7 +17,7 @@ public class Task {
         this.task_name = task_name;
         this.deadline = deadline;
         this.category = category;
-        completed = false;
+        completed = true; //change back to false
     }
 
     public String getWhat() {

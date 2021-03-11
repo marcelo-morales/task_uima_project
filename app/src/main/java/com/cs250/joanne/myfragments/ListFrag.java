@@ -61,19 +61,26 @@ public class ListFrag extends Fragment {
         // program a short click on the list item
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (myact.myItems.get(position).checkCompletetion()) {
+                String taskName = myact.myItems.get(position).getName();
+                String category = myact.myItems.get(position).getCategory();
+                String date = myact.myItems.get(position).getDeadline();
 
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", position);
+                bundle.putString("taskName", taskName);
+                bundle.putString("category", category);
+                bundle.putString("date", date);
+
+                if (myact.myItems.get(position).checkCompletetion()) {
+                    Fragment CompletedTasksFragment = new CompletedTasksFragment();
+                    CompletedTasksFragment.setArguments(bundle);
+
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, CompletedTasksFragment);
+                    fragmentTransaction.commit();
                 } else {
-                    String taskName = myact.myItems.get(position).getName();
-                    String category = myact.myItems.get(position).getCategory();
-                    String date = myact.myItems.get(position).getDeadline();
 
                     Fragment toBeCompletedFrag = new ToBeCompletedFrag();
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("position", position);
-                    bundle.putString("taskName", taskName);
-                    bundle.putString("category", category);
-                    bundle.putString("date", date);
                     toBeCompletedFrag.setArguments(bundle);
 
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();

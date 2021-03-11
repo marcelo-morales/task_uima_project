@@ -1,7 +1,6 @@
 package com.cs250.joanne.myfragments;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,10 +15,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
 
-
-public class ToBeCompletedFrag extends Fragment {
+public class CompletedTasksFragment extends Fragment {
 
     private MainActivity myact;
     private ListView myList;
@@ -30,7 +27,7 @@ public class ToBeCompletedFrag extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View myview = inflater.inflate(R.layout.fragment_to_be_completed, container, false);
+        View myview = inflater.inflate(R.layout.fragment_completed_tasks, container, false);
 
         cntx = getActivity().getApplicationContext();
 
@@ -42,24 +39,17 @@ public class ToBeCompletedFrag extends Fragment {
         String date = bundle.getString("date");
         final int position = bundle.getInt("position");
 
-        TextView nameText = (TextView) myview.findViewById(R.id.to_do_task);
-        TextView dateText = (TextView) myview.findViewById(R.id.to_do_date);
-        TextView categoryText = (TextView) myview.findViewById(R.id.to_do_category);
+        TextView nameText = (TextView) myview.findViewById(R.id.completed_task);
+        TextView dateText = (TextView) myview.findViewById(R.id.completed_date);
+        TextView dueDateText = (TextView) myview.findViewById(R.id.due_date);
+        TextView categoryText = (TextView) myview.findViewById(R.id.completed_category);
 
         nameText.setText("Task: " + taskName);
-        dateText.setText("Due: " + date);
+        dueDateText.setText("Due: " + date);
+        dateText.setText("Done: " + date );
         categoryText.setText("Category: " + category);
 
-        Button button = (Button) myview.findViewById(R.id.complete_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myact.myItems.get(position).markComplete();
-                System.out.println(myact.myItems.get(position).checkCompletetion());
-            }
-        });
-
-        ImageView imageView = (ImageView) myview.findViewById(R.id.close_mark);
+        ImageView imageView = (ImageView) myview.findViewById(R.id.close_mark_2);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
