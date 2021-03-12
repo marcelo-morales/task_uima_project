@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.cs250.joanne.myfragments.MainActivity">
+    tools:context="com.cs250.joanne.myfragments.CompleteActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 
     <!-- placeholder for various fragments -->
     <LinearLayout
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragment_completed_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

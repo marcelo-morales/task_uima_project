@@ -18,10 +18,13 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import static com.cs250.joanne.myfragments.CompleteActivity.completedItems;
+
 
 public class ToBeCompletedFrag extends Fragment {
 
     private MainActivity myact;
+    private CompleteActivity completeActivity;
     private ListView myList;
     Context cntx;
 
@@ -54,8 +57,10 @@ public class ToBeCompletedFrag extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myact.myItems.get(position).markComplete();
-                System.out.println(myact.myItems.get(position).checkCompletetion());
+                Task completedTask = myact.myItems.get(position);
+                completedTask.markComplete();
+                myact.myItems.remove(completedTask);
+                completedItems.add(completedTask);
             }
         });
 

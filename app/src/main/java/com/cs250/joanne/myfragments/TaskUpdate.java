@@ -33,9 +33,6 @@ import static java.time.LocalDate.of;
 
 public class TaskUpdate extends AppCompatActivity {
     private MainActivity myact;
-    private ListView myList;
-    private SharedPreferences myPrefs;
-
     private String taskName;
     private String taskCategory;
     private LocalDate localDate;
@@ -67,7 +64,11 @@ public class TaskUpdate extends AppCompatActivity {
         if (text1 != null && text2 != null) {
             editText.setText(text1);
             editText2.setText(text2);
-            myact.myItems.remove(index);
+            String correctText1 = editText.getText().toString();
+            String correctText2 = editText2.getText().toString();
+            if (!correctText1.equals(text1) || !correctText2.equals(text2)) {
+                myact.myItems.remove(index - 1);
+            }
         }
 
         //Get local date

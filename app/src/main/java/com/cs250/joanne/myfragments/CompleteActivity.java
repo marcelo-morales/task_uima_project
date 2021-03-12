@@ -36,12 +36,12 @@ public class CompleteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment item;
-    private Fragment list;
+    private Fragment completeList;
     private FragmentTransaction transaction;
-    protected ItemAdapter aa;
+    protected ItemAdapter ia;
     //arrayadapter
 
-    protected ArrayList<Task> myItems;
+    public static ArrayList<Task> completedItems = new ArrayList<Task>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +51,19 @@ public class CompleteActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         // make array adapter to bind arraylist to listview with custom item layout
-        aa = new ItemAdapter(this, R.layout.item_layout, myItems);
+        ia = new ItemAdapter(this, R.layout.item_layout, completedItems);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         item = new ItemFrag();
-        list = new ListFrag();
+        completeList = new ListFrag();
 
-
-
-
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_completed_container, completeList).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -108,7 +113,7 @@ public class CompleteActivity extends AppCompatActivity
 
             //if click on done
         } else if (id == R.id.done) {
-
+            Intent myIntent = new Intent(this, CompleteActivity.class);
 
             //if click on stats
         } else if (id == R.id.stats) {
@@ -140,7 +145,7 @@ public class CompleteActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        this.aa.notifyDataSetChanged();
+        this.ia.notifyDataSetChanged();
     }
 
     public void onSaveInstanceState(Bundle savedInstanceState) {
