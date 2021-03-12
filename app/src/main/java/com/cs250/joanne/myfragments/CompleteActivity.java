@@ -36,7 +36,7 @@ public class CompleteActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment item;
-    private Fragment completeList;
+    private Fragment list;
     private FragmentTransaction transaction;
     protected ItemAdapter ia;
     //arrayadapter
@@ -59,11 +59,11 @@ public class CompleteActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        item = new ItemFrag();
-        completeList = new ListFrag();
+        //item = new ItemFrag();
+        list = new CompletedListFrag();
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_completed_container, completeList).commit();
+                .add(R.id.fragment_completed_container, list).commit();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

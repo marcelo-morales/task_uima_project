@@ -49,7 +49,6 @@ public class ListFrag extends Fragment {
         View myview = inflater.inflate(R.layout.list_frag, container, false);
 
         cntx = getActivity().getApplicationContext();
-
         myact = (MainActivity) getActivity();
         myList = (ListView) myview.findViewById(R.id.mylist);
         // connect listview to the array adapter in MainActivity

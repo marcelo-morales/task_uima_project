@@ -26,13 +26,13 @@ public class CompletedListFrag extends Fragment {
     public static final int MENU_ITEM_DELETE = Menu.FIRST + 2;
 
     private ListView completedList;
-    private CompleteActivity myact;
+    private CompleteActivity cact;
 
     private EditText editText;
     private EditText editText2;
     private DatePicker datePicker;
 
-    Context cntx;
+    Context completedCntx;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,22 +41,22 @@ public class CompletedListFrag extends Fragment {
         // Inflate the layout for this fragment
         View myview = inflater.inflate(R.layout.fragment_completed_list, container, false);
 
-        cntx = getActivity().getApplicationContext();
+        completedCntx = getActivity().getApplicationContext();
 
-        myact = (CompleteActivity) getActivity();
+        cact= (CompleteActivity) getActivity();
         completedList = (ListView) myview.findViewById(R.id.completedlist);
         // connect listview to the array adapter in MainActivity
-        completedList.setAdapter(myact.ia);
+        completedList.setAdapter(cact.ia);
         registerForContextMenu(completedList);
         // refresh view
-        myact.ia.notifyDataSetChanged();
+        cact.ia.notifyDataSetChanged();
 
         // program a short click on the list item
         completedList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String taskName = myact.completedItems.get(position).getName();
-                String category = myact.completedItems.get(position).getCategory();
-                String date = myact.completedItems.get(position).getDeadline();
+                String taskName = cact.completedItems.get(position).getName();
+                String category = cact.completedItems.get(position).getCategory();
+                String date = cact.completedItems.get(position).getDeadline();
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("position", position);
@@ -64,7 +64,7 @@ public class CompletedListFrag extends Fragment {
                 bundle.putString("category", category);
                 bundle.putString("date", date);
 
-                if (myact.completedItems.get(position).checkCompletetion()) {
+                if (cact.completedItems.get(position).checkCompletetion()) {
                     Fragment CompletedTasksFragment = new CompletedTasksFragment();
                     CompletedTasksFragment.setArguments(bundle);
 
@@ -111,33 +111,33 @@ public class CompletedListFrag extends Fragment {
         switch (item.getItemId()) {
             case MENU_ITEM_EDITVIEW: {
 
-                Toast.makeText(cntx, "edit request",
+                Toast.makeText(completedCntx, "edit request",
                         Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(getActivity(), TaskUpdate.class);
-                intent.putExtra("name", myact.completedItems.get(index).getName());
-                intent.putExtra("category", myact.completedItems.get(index).getCategory());
+                intent.putExtra("name", cact.completedItems.get(index).getName());
+                intent.putExtra("category", cact.completedItems.get(index).getCategory());
                 intent.putExtra("position", index);
                 this.startActivity(intent);
 
                 return false;
             }
             case MENU_ITEM_COPY: {
-                Task oldTask = myact.completedItems.get(index);
+                Task oldTask = cact.completedItems.get(index);
                 String newName = oldTask.getName() + "(Copy)";
                 Task copyTask = new Task(newName, oldTask.getDeadline(), oldTask.getCategory());
-                Toast.makeText(cntx, "task " + index + 1 + " copied",
+                Toast.makeText(completedCntx, "task " + index + 1 + " copied",
                         Toast.LENGTH_SHORT).show();
-                myact.completedItems.add(oldTask);
-                myact.completedItems.add(copyTask);
-                myact.ia.notifyDataSetChanged();
+                cact.completedItems.add(oldTask);
+                cact.completedItems.add(copyTask);
+                cact.ia.notifyDataSetChanged();
             }
             case MENU_ITEM_DELETE: {
-                myact.completedItems.remove(index);
-                Toast.makeText(cntx, "task " + index + 1 + " deleted",
+                cact.completedItems.remove(index);
+                Toast.makeText(completedCntx, "task " + index + 1 + " deleted",
                         Toast.LENGTH_SHORT).show();
                 // refresh view
-                myact.ia.notifyDataSetChanged();
+                cact.ia.notifyDataSetChanged();
                 return true;
             }
         }

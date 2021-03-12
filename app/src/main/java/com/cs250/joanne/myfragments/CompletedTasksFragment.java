@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 public class CompletedTasksFragment extends Fragment {
 
-    private MainActivity myact;
+    private CompleteActivity myact;
     private ListView myList;
     Context cntx;
 
@@ -31,7 +31,7 @@ public class CompletedTasksFragment extends Fragment {
 
         cntx = getActivity().getApplicationContext();
 
-        myact = (MainActivity) getActivity();
+        myact = (CompleteActivity) getActivity();
 
         Bundle bundle = this.getArguments();
         String taskName = bundle.getString("taskName");
@@ -54,9 +54,9 @@ public class CompletedTasksFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //getActivity().getSupportFragmentManager().popBackStackImmediate();
-                Fragment listFrag = new ListFrag();
+                Fragment listFrag = new CompletedListFrag();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, listFrag);
+                fragmentTransaction.replace(R.id.fragment_completed_container, listFrag);
                 fragmentTransaction.commit();
             }
         });
