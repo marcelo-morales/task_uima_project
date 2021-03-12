@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity
             //if click on done
         } else if (id == R.id.done) {
             Intent myIntent = new Intent(this, CompleteActivity.class);
+            System.out.println("Working main activity");
             this.startActivity(myIntent);
 
             //if click on stats

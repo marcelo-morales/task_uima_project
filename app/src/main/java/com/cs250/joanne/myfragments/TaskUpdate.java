@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static com.cs250.joanne.myfragments.MainActivity.myItems;
+import static com.cs250.joanne.myfragments.Statistics.total_tasks_array;
 import static java.time.LocalDate.of;
 
 public class TaskUpdate extends AppCompatActivity {
@@ -92,6 +93,7 @@ public class TaskUpdate extends AppCompatActivity {
                 Task newTask = new Task(value, date , value2);
 
                 myItems.add(newTask);
+                total_tasks_array.add(newTask);
 
                 startActivity(newIntent);
             }

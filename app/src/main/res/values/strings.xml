@@ -4,7 +4,7 @@
     <string name="complete_name">Completed Tasks</string>
     <string name="add">ADD ITEM</string>
     <string name="cancel">CANCEL</string>
-    <string name="update">UPDATE</string>
+    <string name="update">SAVE</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

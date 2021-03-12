@@ -18,7 +18,10 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 import static com.cs250.joanne.myfragments.CompleteActivity.completedItems;
+import static com.cs250.joanne.myfragments.MainActivity.myItems;
 
 
 public class ToBeCompletedFrag extends Fragment {
@@ -27,6 +30,8 @@ public class ToBeCompletedFrag extends Fragment {
     private CompleteActivity completeActivity;
     private ListView myList;
     Context cntx;
+
+    private ArrayList<Task> completed_tasks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,13 +58,19 @@ public class ToBeCompletedFrag extends Fragment {
         dateText.setText("Due: " + date);
         categoryText.setText("Category: " + category);
 
+
         Button button = (Button) myview.findViewById(R.id.complete_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Task completedTask = myact.myItems.get(position);
+                Task completedTask = myItems.get(position);
                 completedTask.markComplete();
-                myact.myItems.remove(completedTask);
+
+
+                //this was error that was happeneing below
+                //I made a new array list for my tasks to be able to read in the completed ones
+                myItems.remove(completedTask);
+
                 completedItems.add(completedTask);
             }
         });
@@ -78,6 +89,8 @@ public class ToBeCompletedFrag extends Fragment {
 
         return myview;
     }
+
+
 
     // Called at the start of the visible lifetime.
     @Override

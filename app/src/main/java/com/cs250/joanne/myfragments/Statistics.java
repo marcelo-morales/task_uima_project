@@ -25,8 +25,12 @@ import java.util.ArrayList;
 
 import static com.cs250.joanne.myfragments.MainActivity.myItems;
 
+
+
 public class Statistics extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static ArrayList<Task> total_tasks_array = new ArrayList<>();
 
     // Current count
     private int done_by_deadline = 0;
@@ -79,11 +83,11 @@ public class Statistics extends AppCompatActivity
         sPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         //initialize values
-        done_by_deadline = done_by_deadline(myItems);
-        done_after_due = done_after_deadline(myItems);
-        past_due = past_due(myItems);
-        to_be_due = to_be_done(myItems);
-        total_tasks = myItems.size();
+        done_by_deadline = done_by_deadline(total_tasks_array);
+        done_after_due = done_after_deadline(total_tasks_array);
+        past_due = past_due(total_tasks_array);
+        to_be_due = to_be_done(total_tasks_array);
+        total_tasks = total_tasks_array.size();
 
         TextView first_text = new TextView(this);
         first_text=(TextView)findViewById(R.id.done_by_deadline);
@@ -119,9 +123,13 @@ public class Statistics extends AppCompatActivity
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public int done_by_deadline(ArrayList<Task> tasks) {
+
+        //when marking a task as complete, we are taking it out for some reason
+
         int completed = 0;
         for (int i = 0; i < tasks.size(); ++i) {
             Task current_task = tasks.get(i);
+            System.out.println(" done by deadline task completion status " + Boolean.toString(current_task.checkCompletetion()));
             int [] my_deadline = get_task_date(current_task);
             int [] today = get_today();
 
@@ -138,6 +146,7 @@ public class Statistics extends AppCompatActivity
         int completed = 0;
         for (int i = 0; i < tasks.size(); ++i) {
             Task current_task = tasks.get(i);
+            System.out.println("done after deadline task completion status " + Boolean.toString(current_task.checkCompletetion()));
             int [] my_deadline = get_task_date(current_task);
             int [] today = get_today();
 
@@ -158,19 +167,26 @@ public class Statistics extends AppCompatActivity
             int [] today = get_today();
             //if the deadline has past (is after today) but the the task is complete
             if (completed_by_date(my_deadline, today) && !current_task.checkCompletetion()) {
+                System.out.println("Marcelo past due " + today[0] + " " + today[1] + " " + today[2]);
+                System.out.println("Nando past due" + my_deadline[0] + " " + my_deadline[1] + " " + my_deadline[2]);
                 ++completed;
             }
         }
         return completed;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public int to_be_done(ArrayList<Task> tasks) {
         int completed = 0;
         for (int i = 0; i < tasks.size(); ++i) {
             Task current_task = tasks.get(i);
+            int [] my_deadline = get_task_date(current_task);
+            int [] today = get_today();
 
-            //if the deadline has past (is after today) but the the task is complete
-            if (!current_task.checkCompletetion()) {
+            //not completed and deadline is after tody
+            if (completed_by_date(today, my_deadline) && !current_task.checkCompletetion()) {
+                System.out.println("Marcelo to be done" + today[0] + " " + today[1] + " " + today[2]);
+                System.out.println("Nando to be done" + my_deadline[0] + " " + my_deadline[1] + " " + my_deadline[2]);
                 ++completed;
             }
         }
@@ -190,17 +206,20 @@ public class Statistics extends AppCompatActivity
         int currentDay = currentdate.getDayOfMonth();
         System.out.println("Current day: "+currentDay);
         //Getting the current month
-        Month currentMonth = currentdate.getMonth();
-        int current = currentMonth.getValue();
+        Month month = currentdate.getMonth();
+        int currentMonth = month.getValue();
 
         System.out.println("Current month: "+currentMonth);
         //getting the current year
         int currentYear = currentdate.getYear();
         //System.out.println("Current month: "+currentYear);
         int [] today = new int [3];
-        today[0] = current;
+        today[0] = currentMonth;
         today[1] = currentDay;
         today[2] = currentYear;
+
+       // System.out.println("The date for today " + today[0] + " " + today[1] + " " + today[2]);
+
         return today;
     }
 
@@ -217,14 +236,17 @@ public class Statistics extends AppCompatActivity
             if (counter == 0) {
                 int month=Integer.parseInt(t);
                 today[0] = month;
-            } else if (counter == 2) {
+            } else if (counter == 1) {
                 int day=Integer.parseInt(t);
                 today[1] = day;
             } else {
                 int year=Integer.parseInt(t);
                 today[2] = year;
             }
+            ++counter;
         }
+
+        System.out.println("The date for task is " + today[0] + " " + today[1] + " " + today[2]);
 
         return today;
     }
@@ -232,13 +254,13 @@ public class Statistics extends AppCompatActivity
     //helps with first two stats
     //find out if date one comes before date two
     public boolean completed_by_date (int [] date_one, int [] date_two) {
-        int day_one = date_one[0];
         int month_one = date_one[0];
-        int year_one = date_one[0];
+        int day_one = date_one[1];
+        int year_one = date_one[2];
 
-        int day_two = date_two[0];
         int month_two = date_two[0];
-        int year_two = date_two[0];
+        int day_two = date_two[1];
+        int year_two = date_two[2];
 
         if (year_one > year_two) {
             return false;
