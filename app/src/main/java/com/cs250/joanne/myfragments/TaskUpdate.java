@@ -64,60 +64,42 @@ public class TaskUpdate extends AppCompatActivity {
         if (text1 != null && text2 != null) {
             editText.setText(text1);
             editText2.setText(text2);
-            String correctText1 = editText.getText().toString();
-            String correctText2 = editText2.getText().toString();
-            if (!correctText1.equals(text1) || !correctText2.equals(text2)) {
-                myact.myItems.remove(index - 1);
-            }
         }
 
         //Get local date
         datePicker = (DatePicker) findViewById(R.id.datePicker1);
-        //localDate = LocalDate.of(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-        System.out.println("this is new date " + localDate);
-
 
         simpleButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String value = editText.getText().toString();
                 String value2 = editText2.getText().toString();
-                //System.out.println("this is category name " + value);
-                //System.out.println("this is category name " + value2);
-                Intent intent = new Intent(TaskUpdate.this, MainActivity.class);
 
-                intent.putExtra("taskName", value);
-                intent.putExtra("taskCategory", value2);
+                Intent newIntent = new Intent(TaskUpdate.this, MainActivity.class);
+
+                newIntent.putExtra("taskName", value);
+                newIntent.putExtra("taskCategory", value2);
+
                 int day = datePicker.getDayOfMonth();
-                System.out.println("this is day " + day);
                 int month = datePicker.getMonth() + 1;
-                System.out.println("this is month " + month);
                 int year =  datePicker.getYear();
-                System.out.println("this is year " + year);
-                // Calendar calendar = Calendar.getInstance();
-                //calendar.set(year, month, day);
-                //Date time = calendar.getTime();
-                String date = String.valueOf(month).concat("/").concat(String.valueOf(day)).concat("/").concat(String.valueOf(year));
-                System.out.println("this is date " + date);
-                intent.putExtra("taskDue", date);
 
+                String date = String.valueOf(month).concat("/").concat(String.valueOf(day)).concat("/").concat(String.valueOf(year));
+
+                newIntent.putExtra("taskDue", date);
 
                 Task newTask = new Task(value, date , value2);
-                //this.aa.notifyDataSetChanged();
 
                 myItems.add(newTask);
 
-                startActivity(intent);
-
-
-
+                startActivity(newIntent);
             }
         });
+
         simpleButton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // System.out.println("this is task name " + taskName);
-                //System.out.println("this is category name " + taskCategory);
                 finish();
             }
         });

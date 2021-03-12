@@ -132,7 +132,9 @@ public class ListFrag extends Fragment {
                 Task oldTask = myact.myItems.get(index);
                 String newName = oldTask.getName() + "(Copy)";
                 Task copyTask = new Task(newName, oldTask.getDeadline(), oldTask.getCategory());
-                Toast.makeText(cntx, "task " + index + 1 + " copied",
+                int count = index;
+                count++;
+                Toast.makeText(cntx, "task " + count + " copied",
                         Toast.LENGTH_SHORT).show();
                 myact.myItems.add(oldTask);
                 myact.myItems.add(copyTask);
@@ -140,7 +142,9 @@ public class ListFrag extends Fragment {
             }
             case MENU_ITEM_DELETE: {
                 myact.myItems.remove(index);
-                Toast.makeText(cntx, "task " + index + 1 + " deleted",
+                int count = index;
+                count++;
+                Toast.makeText(cntx, "task " + count + " deleted",
                         Toast.LENGTH_SHORT).show();
                 // refresh view
                 myact.aa.notifyDataSetChanged();

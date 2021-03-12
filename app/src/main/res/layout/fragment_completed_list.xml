@@ -19,6 +19,7 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         android:soundEffectsEnabled="true"
-        android:layout_gravity="top"/>
+        android:layout_gravity="top"
+        android:background="#D3D3D3"/>
 
 </FrameLayout>
