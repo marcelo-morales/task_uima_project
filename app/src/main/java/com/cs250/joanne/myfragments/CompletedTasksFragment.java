@@ -1,8 +1,10 @@
 package com.cs250.joanne.myfragments;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -15,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 
 public class CompletedTasksFragment extends Fragment {
 
@@ -22,6 +27,7 @@ public class CompletedTasksFragment extends Fragment {
     private ListView myList;
     Context cntx;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,16 +50,24 @@ public class CompletedTasksFragment extends Fragment {
         TextView dueDateText = (TextView) myview.findViewById(R.id.due_date);
         TextView categoryText = (TextView) myview.findViewById(R.id.completed_category);
 
+        int[] currentDate = get_today();
+
+        int month = currentDate[0];
+        int day = currentDate[1];
+        int year = currentDate[2];
+
+        String nowDate = String.valueOf(month).concat("/").concat(String.valueOf(day)).concat("/").concat(String.valueOf(year));
+
         nameText.setText("Task: " + taskName);
         dueDateText.setText("Due: " + date);
-        dateText.setText("Done: " + date );
+        dateText.setText("Done: " + nowDate );
         categoryText.setText("Category: " + category);
 
         ImageView imageView = (ImageView) myview.findViewById(R.id.close_mark_2);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getActivity().getSupportFragmentManager().popBackStackImmediate();
+
                 Fragment listFrag = new CompletedListFrag();
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_completed_container, listFrag);
@@ -62,6 +76,29 @@ public class CompletedTasksFragment extends Fragment {
         });
 
         return myview;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public int [] get_today() {
+        //Getting the current date value
+        LocalDate currentdate = LocalDate.now();
+        System.out.println("Current date: "+currentdate);
+        //Getting the current day
+        int currentDay = currentdate.getDayOfMonth();
+        System.out.println("Current day: "+currentDay);
+        //Getting the current month
+        Month currentMonth = currentdate.getMonth();
+        int current = currentMonth.getValue();
+
+        System.out.println("Current month: "+currentMonth);
+        //getting the current year
+        int currentYear = currentdate.getYear();
+        //System.out.println("Current month: "+currentYear);
+        int [] today = new int [3];
+        today[0] = current;
+        today[1] = currentDay;
+        today[2] = currentYear;
+        return today;
     }
 
     // Called at the start of the visible lifetime.
