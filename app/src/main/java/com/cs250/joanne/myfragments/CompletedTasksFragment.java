@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Calendar;
+
+import static com.cs250.joanne.myfragments.CompleteActivity.completedItems;
 
 
 public class CompletedTasksFragment extends Fragment {
@@ -27,7 +30,7 @@ public class CompletedTasksFragment extends Fragment {
     private ListView myList;
     Context cntx;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class CompletedTasksFragment extends Fragment {
         Bundle bundle = this.getArguments();
         String taskName = bundle.getString("taskName");
         String category = bundle.getString("category");
-        String date = bundle.getString("date");
+        String date = bundle.getString("finishedDate");
         final int position = bundle.getInt("position");
 
         TextView nameText = (TextView) myview.findViewById(R.id.completed_task);
@@ -50,17 +53,9 @@ public class CompletedTasksFragment extends Fragment {
         TextView dueDateText = (TextView) myview.findViewById(R.id.due_date);
         TextView categoryText = (TextView) myview.findViewById(R.id.completed_category);
 
-        int[] currentDate = get_today();
-
-        int month = currentDate[0];
-        int day = currentDate[1];
-        int year = currentDate[2];
-
-        String nowDate = String.valueOf(month).concat("/").concat(String.valueOf(day)).concat("/").concat(String.valueOf(year));
-
         nameText.setText("Task: " + taskName);
-        dueDateText.setText("Due: " + date);
-        dateText.setText("Done: " + nowDate );
+        dueDateText.setText("Due: " + completedItems.get(position).getDeadline());
+        dateText.setText("Done: " + completedItems.get(position).getCompletedDate());
         categoryText.setText("Category: " + category);
 
         ImageView imageView = (ImageView) myview.findViewById(R.id.close_mark_2);
@@ -78,26 +73,24 @@ public class CompletedTasksFragment extends Fragment {
         return myview;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public int [] get_today() {
         //Getting the current date value
-        LocalDate currentdate = LocalDate.now();
-        System.out.println("Current date: "+currentdate);
-        //Getting the current day
-        int currentDay = currentdate.getDayOfMonth();
-        System.out.println("Current day: "+currentDay);
-        //Getting the current month
-        Month currentMonth = currentdate.getMonth();
-        int current = currentMonth.getValue();
+        Calendar calendar = Calendar.getInstance();
 
-        System.out.println("Current month: "+currentMonth);
+        //Getting the current day
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        //Getting the current month
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+
         //getting the current year
-        int currentYear = currentdate.getYear();
-        //System.out.println("Current month: "+currentYear);
+        int currentYear = calendar.get(Calendar.YEAR);
+
         int [] today = new int [3];
-        today[0] = current;
+        today[0] = currentMonth;
         today[1] = currentDay;
         today[2] = currentYear;
+
         return today;
     }
 

@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Collections;
+
 public class CompletedListFrag extends Fragment {
     public static final int MENU_ITEM_EDITVIEW = Menu.FIRST;
     public static final int MENU_ITEM_COPY = Menu.FIRST + 1;
@@ -49,6 +51,7 @@ public class CompletedListFrag extends Fragment {
         completedList.setAdapter(cact.ia);
         registerForContextMenu(completedList);
         // refresh view
+        Collections.sort(cact.completedItems);
         cact.ia.notifyDataSetChanged();
 
         // program a short click on the list item
@@ -56,13 +59,13 @@ public class CompletedListFrag extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String taskName = cact.completedItems.get(position).getName();
                 String category = cact.completedItems.get(position).getCategory();
-                String date = cact.completedItems.get(position).getDeadline();
+                String date = cact.completedItems.get(position).getCompletedDate();
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("position", position);
                 bundle.putString("taskName", taskName);
                 bundle.putString("category", category);
-                bundle.putString("date", date);
+                bundle.putString("finishedDate", date);
 
                 if (cact.completedItems.get(position).checkCompletetion()) {
                     Fragment CompletedTasksFragment = new CompletedTasksFragment();
@@ -91,9 +94,6 @@ public class CompletedListFrag extends Fragment {
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        editText = (EditText) v.findViewById(R.id.task_name);
-        editText2 = (EditText) v.findViewById(R.id.category_name);
-        datePicker = (DatePicker) v.findViewById(R.id.datePicker1);
         // create menu in code instead of in xml file (xml approach preferred)
         // Add menu items
         menu.add(0, MENU_ITEM_EDITVIEW, 0, R.string.menu_editview);
@@ -110,33 +110,37 @@ public class CompletedListFrag extends Fragment {
 
         switch (item.getItemId()) {
             case MENU_ITEM_EDITVIEW: {
-
-                Toast.makeText(completedCntx, "edit request",
-                        Toast.LENGTH_SHORT).show();
-
                 Intent intent = new Intent(getActivity(), TaskUpdate.class);
                 intent.putExtra("name", cact.completedItems.get(index).getName());
                 intent.putExtra("category", cact.completedItems.get(index).getCategory());
                 intent.putExtra("position", index);
+                intent.putExtra("date", cact.completedItems.get(index).getDeadline());
+                String type = "edit";
+                intent.putExtra("type", type);
+                String listType = "completed";
+                intent.putExtra("listType", listType);
                 this.startActivity(intent);
 
-                return false;
+                return true;
             }
             case MENU_ITEM_COPY: {
                 Task oldTask = cact.completedItems.get(index);
                 String newName = oldTask.getName() + "(Copy)";
                 Task copyTask = new Task(newName, oldTask.getDeadline(), oldTask.getCategory());
-                Toast.makeText(completedCntx, "task " + index + 1 + " copied",
-                        Toast.LENGTH_SHORT).show();
-                cact.completedItems.add(oldTask);
                 cact.completedItems.add(copyTask);
+                Collections.sort(cact.completedItems);
                 cact.ia.notifyDataSetChanged();
+
+                return true;
             }
             case MENU_ITEM_DELETE: {
                 cact.completedItems.remove(index);
-                Toast.makeText(completedCntx, "task " + index + 1 + " deleted",
+                int count = index;
+                count++;
+                Toast.makeText(completedCntx, "task " +  count + " deleted",
                         Toast.LENGTH_SHORT).show();
                 // refresh view
+                Collections.sort(cact.completedItems);
                 cact.ia.notifyDataSetChanged();
                 return true;
             }

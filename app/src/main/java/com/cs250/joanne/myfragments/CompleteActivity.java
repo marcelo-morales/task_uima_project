@@ -121,19 +121,6 @@ public class CompleteActivity extends AppCompatActivity
 
             this.startActivity(myIntent);
 
-
-            /*
-            transaction = getSupportFragmentManager().beginTransaction();
-
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack so the user can navigate back
-            transaction.replace(R.id.fragment_container, list);
-            transaction.addToBackStack(null);
-
-// Commit the transaction
-            transaction.commit();
-            */
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

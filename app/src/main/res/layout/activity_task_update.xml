@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center_horizontal">
 
         <EditText
@@ -35,19 +35,28 @@
             android:textStyle="bold"
             android:paddingBottom="20dp"/>
 
-    </LinearLayout>
+        <EditText
+            android:id="@+id/due_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="enter due date"
+            android:focusable="false"
+            android:textColor="#2a37c2"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:textStyle="bold"
+            android:paddingBottom="20dp"/>
 
-    <DatePicker
-        android:id="@+id/datePicker1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#6495ED"
-        android:layout_gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:gravity="center_horizontal">
 
         <Button
@@ -55,11 +64,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="20dp"
             android:layout_weight="0.5" />
 
         <Button

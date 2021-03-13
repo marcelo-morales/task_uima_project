@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.cs250.joanne.myfragments.MainActivity.myItems;
 
@@ -41,8 +43,8 @@ public class Statistics extends AppCompatActivity
 
 
     // Key for current count
-    private final String DONE_BY_DEADLINE_KEY = "count";
-    private final String DONE_AFTER_DUE_KEY = "count";
+    private final String DONE_BY_DEADLINE_KEY = "done_by_deadline";
+    private final String DONE_AFTER_DUE_KEY = "done_after_due";
     private final String PAST_DUE_KEY = "count";
     private final String TO_BE_DUE_KEY = "count";
     private final String TOTAL_TASKS_KEY = "count";
@@ -60,9 +62,11 @@ public class Statistics extends AppCompatActivity
             "com.example.android.hellosharedprefs";
 
     //arrayadapter
+    Calendar cal = Calendar.getInstance();
+    String today = String.format("%02d/%02d/%04d", cal.get(Calendar.MONTH) + 1,
+            cal.get(Calendar.DAY_OF_MONTH),
+            cal.get(Calendar.YEAR));
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,12 +86,11 @@ public class Statistics extends AppCompatActivity
 
         sPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
-        //initialize values
-        done_by_deadline = done_by_deadline(total_tasks_array);
-        done_after_due = done_after_deadline(total_tasks_array);
-        past_due = past_due(total_tasks_array);
-        to_be_due = to_be_done(total_tasks_array);
-        total_tasks = total_tasks_array.size();
+        done_by_deadline = sPreferences.getInt(DONE_BY_DEADLINE_KEY, 0);
+        done_after_due = sPreferences.getInt(DONE_AFTER_DUE_KEY, 0);
+        past_due = pastDue();
+        to_be_due = toBeDone();
+        total_tasks = done_by_deadline + done_after_due + past_due + to_be_due;
 
         TextView first_text = new TextView(this);
         first_text=(TextView)findViewById(R.id.done_by_deadline);
@@ -108,193 +111,31 @@ public class Statistics extends AppCompatActivity
         TextView fifth_text = new TextView(this);
         fifth_text=(TextView)findViewById(R.id.total_tasks);
         fifth_text.setText(String.valueOf(total_tasks) + " total tasks");
-
-
-        done_by_deadline = sPreferences.getInt(DONE_BY_DEADLINE_KEY, 0);
-        done_after_due = sPreferences.getInt(DONE_AFTER_DUE_KEY, 0);
-        past_due = sPreferences.getInt(PAST_DUE_KEY, 0);
-        to_be_due = sPreferences.getInt(TO_BE_DUE_KEY, 0);
-        total_tasks = sPreferences.getInt(TOTAL_TASKS_KEY, 0);
-
-
-
     }
 
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public int done_by_deadline(ArrayList<Task> tasks) {
-
-        //when marking a task as complete, we are taking it out for some reason
-
-        int completed = 0;
-        for (int i = 0; i < tasks.size(); ++i) {
-            Task current_task = tasks.get(i);
-            System.out.println(" done by deadline task completion status " + Boolean.toString(current_task.checkCompletetion()));
-            int [] my_deadline = get_task_date(current_task);
-            int [] today = get_today();
-
-            //if today is before deadline and the task is complete
-            if (completed_by_date(today, my_deadline) && current_task.checkCompletetion()) {
-                ++completed;
+    private int toBeDone() {
+        int toBeDueCount = 0;
+        Task currentDay = new Task("", today, "");
+        for (int i = 0; i < myItems.size(); i++) {
+            Task task = myItems.get(i);
+            if (task.compareTo(currentDay) >= 0) {
+                toBeDueCount++;
             }
         }
-        return completed;
+        return toBeDueCount;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public int done_after_deadline(ArrayList<Task> tasks) {
-        int completed = 0;
-        for (int i = 0; i < tasks.size(); ++i) {
-            Task current_task = tasks.get(i);
-            System.out.println("done after deadline task completion status " + Boolean.toString(current_task.checkCompletetion()));
-            int [] my_deadline = get_task_date(current_task);
-            int [] today = get_today();
-
-            //if the deadline has past (is after today) but the the task is complete
-            if (completed_by_date(my_deadline, today) && current_task.checkCompletetion()) {
-                ++completed;
+    private int pastDue() {
+        int pastDueCount = 0;
+        Task currentDay = new Task("", today, "");
+        for (int i = 0; i < myItems.size(); i++) {
+            Task task = myItems.get(i);
+            if (task.compareTo(currentDay) < 0) {
+                pastDueCount++;
             }
         }
-        return completed;
+        return pastDueCount;
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public int past_due(ArrayList<Task> tasks) {
-        int completed = 0;
-        for (int i = 0; i < tasks.size(); ++i) {
-            Task current_task = tasks.get(i);
-            int [] my_deadline = get_task_date(current_task);
-            int [] today = get_today();
-            //if the deadline has past (is after today) but the the task is complete
-            if (completed_by_date(my_deadline, today) && !current_task.checkCompletetion()) {
-                System.out.println("Marcelo past due " + today[0] + " " + today[1] + " " + today[2]);
-                System.out.println("Nando past due" + my_deadline[0] + " " + my_deadline[1] + " " + my_deadline[2]);
-                ++completed;
-            }
-        }
-        return completed;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public int to_be_done(ArrayList<Task> tasks) {
-        int completed = 0;
-        for (int i = 0; i < tasks.size(); ++i) {
-            Task current_task = tasks.get(i);
-            int [] my_deadline = get_task_date(current_task);
-            int [] today = get_today();
-
-            //not completed and deadline is after tody
-            if (completed_by_date(today, my_deadline) && !current_task.checkCompletetion()) {
-                System.out.println("Marcelo to be done" + today[0] + " " + today[1] + " " + today[2]);
-                System.out.println("Nando to be done" + my_deadline[0] + " " + my_deadline[1] + " " + my_deadline[2]);
-                ++completed;
-            }
-        }
-        return completed;
-    }
-
-
-
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public int [] get_today() {
-        //Getting the current date value
-        LocalDate currentdate = LocalDate.now();
-        System.out.println("Current date: "+currentdate);
-        //Getting the current day
-        int currentDay = currentdate.getDayOfMonth();
-        System.out.println("Current day: "+currentDay);
-        //Getting the current month
-        Month month = currentdate.getMonth();
-        int currentMonth = month.getValue();
-
-        System.out.println("Current month: "+currentMonth);
-        //getting the current year
-        int currentYear = currentdate.getYear();
-        //System.out.println("Current month: "+currentYear);
-        int [] today = new int [3];
-        today[0] = currentMonth;
-        today[1] = currentDay;
-        today[2] = currentYear;
-
-       // System.out.println("The date for today " + today[0] + " " + today[1] + " " + today[2]);
-
-        return today;
-    }
-
-    public int [] get_task_date(Task task) {
-        //Getting the current date value
-
-        String date = task.getDeadline();
-        String[] tokens = date.split("/");
-
-        int counter = 0;
-        int [] today = new int [3];
-
-        for (String t : tokens) {
-            if (counter == 0) {
-                int month=Integer.parseInt(t);
-                today[0] = month;
-            } else if (counter == 1) {
-                int day=Integer.parseInt(t);
-                today[1] = day;
-            } else {
-                int year=Integer.parseInt(t);
-                today[2] = year;
-            }
-            ++counter;
-        }
-
-        System.out.println("The date for task is " + today[0] + " " + today[1] + " " + today[2]);
-
-        return today;
-    }
-
-    //helps with first two stats
-    //find out if date one comes before date two
-    public boolean completed_by_date (int [] date_one, int [] date_two) {
-        int month_one = date_one[0];
-        int day_one = date_one[1];
-        int year_one = date_one[2];
-
-        int month_two = date_two[0];
-        int day_two = date_two[1];
-        int year_two = date_two[2];
-
-        if (year_one > year_two) {
-            return false;
-        }
-        if (year_one == year_two && month_one > month_two) {
-            return false;
-        }
-        if (year_one == year_two && month_one == month_two && day_one > day_two) {
-            return false;
-        }
-
-        return true;
-
-    }
-
-
-
-
-
-    /*
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-
-        Bundle bundle = getIntent().getExtras();
-        String task = bundle.getString("task_name");
-
-    }
-     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -323,7 +164,6 @@ public class Statistics extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -342,8 +182,9 @@ public class Statistics extends AppCompatActivity
 
             //if click on stats
         } else if (id == R.id.stats) {
+            Intent myIntent = new Intent(this, Statistics.class);
 
-
+            this.startActivity(myIntent);
 
         }
 
@@ -351,20 +192,5 @@ public class Statistics extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    protected void onPause() {
-        super.onPause();
-
-        super.onPause();
-
-        SharedPreferences.Editor preferencesEditor = sPreferences.edit();
-        preferencesEditor.putInt(DONE_BY_DEADLINE_KEY, done_by_deadline);
-        preferencesEditor.putInt(DONE_AFTER_DUE_KEY, done_after_due);
-        preferencesEditor.putInt(PAST_DUE_KEY, past_due);
-        preferencesEditor.putInt(TO_BE_DUE_KEY, to_be_due);
-        preferencesEditor.putInt(TOTAL_TASKS_KEY, total_tasks);
-        preferencesEditor.apply();
-    }
-
 
 }

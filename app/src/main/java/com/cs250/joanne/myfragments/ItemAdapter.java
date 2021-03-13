@@ -41,7 +41,6 @@ public class ItemAdapter extends ArrayAdapter<Task> {
 
         whatView.setText(it.getWhat());
 
-
         return itemView;
     }
 

@@ -25,6 +25,9 @@ import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import static com.cs250.joanne.myfragments.Statistics.total_tasks_array;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,6 +36,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment item;
     private Fragment list;
     private FragmentTransaction transaction;
+    private static boolean flagged = true;
     public ItemAdapter aa;
     //arrayadapter
 
@@ -58,6 +62,26 @@ public class MainActivity extends AppCompatActivity
         item = new ItemFrag();
         list = new ListFrag();
 
+        if (flagged) {
+            //dummy data
+            Task firstTask = new Task("Baseball Practice", "03/20/2021", "Sports");
+            Task secondTask = new Task("Band Practice", "03/09/2021", "Music");
+            Task thirdTask = new Task("UIMA Homework", "03/25/2021", "School");
+
+            myItems.add(firstTask);
+            myItems.add(secondTask);
+            myItems.add(thirdTask);
+
+            total_tasks_array.add(firstTask);
+            total_tasks_array.add(secondTask);
+            total_tasks_array.add(thirdTask);
+
+            flagged = false;
+        }
+
+        Collections.sort(myItems);
+        aa.notifyDataSetChanged();
+
         //list should be the first thing we see
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, list).commit();
@@ -65,22 +89,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
-
-    /*
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-
-        Bundle bundle = getIntent().getExtras();
-        String task = bundle.getString("task_name");
-
-    }
-     */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -134,10 +142,9 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        this.aa.notifyDataSetChanged();
+        //this.aa.notifyDataSetChanged();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onPause() {
         super.onPause();

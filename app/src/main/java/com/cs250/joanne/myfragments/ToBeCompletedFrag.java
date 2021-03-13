@@ -1,6 +1,7 @@
 package com.cs250.joanne.myfragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.cs250.joanne.myfragments.CompleteActivity.completedItems;
 import static com.cs250.joanne.myfragments.MainActivity.myItems;
@@ -66,11 +68,29 @@ public class ToBeCompletedFrag extends Fragment {
                 Task completedTask = myItems.get(position);
                 completedTask.markComplete();
 
+                SharedPreferences sPreferences = myact.getSharedPreferences("com.example.android.hellosharedprefs", Context.MODE_PRIVATE);
 
-                //this was error that was happeneing below
-                //I made a new array list for my tasks to be able to read in the completed ones
+                SharedPreferences.Editor peditor = sPreferences.edit();
+
+                Calendar cal = Calendar.getInstance();
+                String today = String.format("%02d/%02d/%04d", cal.get(Calendar.MONTH) + 1,
+                        cal.get(Calendar.DAY_OF_MONTH),
+                        cal.get(Calendar.YEAR));
+                Task todayTask = new Task("",today,"");
+                int[] currentDate = get_today();
+                int month = currentDate[0];
+                int day = currentDate[1];
+                int year = currentDate[2];
+                String completedDate = String.format("%02d/%02d/%04d", month, day, year);
+                completedTask.setCompletedDate(completedDate);
+
                 myItems.remove(completedTask);
-
+                if (completedTask.compareTo(todayTask) >= 0) {
+                    peditor.putInt("done_by_deadline", sPreferences.getInt("done_by_deadline",0) + 1);
+                } else {
+                    peditor.putInt("done_after_due", sPreferences.getInt("done_after_due",0) + 1);
+                }
+                peditor.apply();
                 completedItems.add(completedTask);
             }
         });
@@ -90,7 +110,26 @@ public class ToBeCompletedFrag extends Fragment {
         return myview;
     }
 
+    public int [] get_today() {
+        //Getting the current date value
+        Calendar calendar = Calendar.getInstance();
 
+        //Getting the current day
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        //Getting the current month
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+
+        //getting the current year
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        int [] today = new int [3];
+        today[0] = currentMonth;
+        today[1] = currentDay;
+        today[2] = currentYear;
+
+        return today;
+    }
 
     // Called at the start of the visible lifetime.
     @Override

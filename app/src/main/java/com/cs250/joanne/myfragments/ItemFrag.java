@@ -23,7 +23,6 @@ public class ItemFrag extends Fragment {
     private Button btn;
     private MainActivity myact;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,12 +31,6 @@ public class ItemFrag extends Fragment {
         View view = inflater.inflate(R.layout.item_frag, container, false);
 
         myact = (MainActivity) getActivity();
-
-
-        //change this later
-        final LocalDate test_date = LocalDate.of(Integer.parseInt("2020"), Integer.parseInt("7"), Integer.parseInt("4"));
-
-
 
         tv = (EditText) view.findViewById(R.id.item_text);
         btn = (Button) view.findViewById(R.id.add_btn);
