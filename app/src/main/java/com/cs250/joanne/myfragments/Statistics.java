@@ -50,7 +50,6 @@ public class Statistics extends AppCompatActivity
     private final String TOTAL_TASKS_KEY = "count";
 
 
-
     private Fragment item;
     private Fragment list;
     private FragmentTransaction transaction;

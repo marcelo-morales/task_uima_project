@@ -80,7 +80,6 @@ public class ListFrag extends Fragment {
                     fragmentTransaction.replace(R.id.fragment_container, CompletedTasksFragment);
                     fragmentTransaction.commit();
                 } else {
-
                     Fragment toBeCompletedFrag = new ToBeCompletedFrag();
                     toBeCompletedFrag.setArguments(bundle);
 

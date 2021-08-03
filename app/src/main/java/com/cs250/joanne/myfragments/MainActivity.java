@@ -6,10 +6,10 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -173,10 +173,6 @@ public class MainActivity extends AppCompatActivity
         // onCreateView if the parent Activity is killed and restarted.
         super.onSaveInstanceState(savedInstanceState);
     }
-
-
-
-
 
 }
 

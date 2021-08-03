@@ -17,8 +17,7 @@ public class ItemAdapter extends ArrayAdapter<Task> {
 
     int resource;
 
-    public ItemAdapter(Context ctx, int res, List<Task> items)
-    {
+    public ItemAdapter(Context ctx, int res, List<Task> items) {
         super(ctx, res, items);
         resource = res;
     }

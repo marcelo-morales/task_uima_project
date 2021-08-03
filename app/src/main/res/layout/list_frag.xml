@@ -15,11 +15,11 @@
         android:id="@+id/mylist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:background="#D3D3D3"
         android:isScrollContainer="true"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
-        android:soundEffectsEnabled="true"
-        android:layout_gravity="top"
-        android:background="#D3D3D3"/>
+        android:soundEffectsEnabled="true" />
 
 </LinearLayout>
